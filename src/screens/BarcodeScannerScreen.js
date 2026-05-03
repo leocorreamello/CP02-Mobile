@@ -15,8 +15,10 @@ export default function BarcodeScannerScreen({ navigation }) {
       {
         text: 'OK',
         onPress: () => {
-          navigation.navigate('Home', {
-            scannedBarcode: data,
+          navigation.navigate({
+            name: 'Home',
+            params: { scannedBarcode: data },
+            merge: true,
           });
         },
       },

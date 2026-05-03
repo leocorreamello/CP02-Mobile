@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+import {
+  Text,
+  TextInput,
+  Button,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
 import { resetUserPassword } from '../firebase/authService';
 
 export default function ForgotPasswordScreen({ navigation }) {
@@ -24,20 +32,33 @@ export default function ForgotPasswordScreen({ navigation }) {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', padding: 20 }}>
-      <Text style={{ fontSize: 24, marginBottom: 20 }}>Recuperar Senha</Text>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: 'center',
+          padding: 20,
+        }}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+      >
+        <Text style={{ fontSize: 24, marginBottom: 20 }}>Recuperar Senha</Text>
 
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        style={{ borderWidth: 1, marginBottom: 10, padding: 10 }}
-      />
+        <TextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          style={{ borderWidth: 1, marginBottom: 10, padding: 10 }}
+        />
 
-      <Button title="Enviar" onPress={handleResetPassword} />
-    </View>
+        <Button title="Enviar" onPress={handleResetPassword} />
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 

@@ -1,5 +1,14 @@
 import { useState } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, Alert } from 'react-native';
+import {
+  Text,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
 import { loginUser } from '../firebase/authService';
 
 export default function LoginScreen({ navigation }) {
@@ -21,35 +30,48 @@ export default function LoginScreen({ navigation }) {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', padding: 20 }}>
-      <Text style={{ fontSize: 24, marginBottom: 20 }}>Login</Text>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: 'center',
+          padding: 20,
+        }}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+      >
+        <Text style={{ fontSize: 24, marginBottom: 20 }}>Login</Text>
 
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        style={{ borderWidth: 1, marginBottom: 10, padding: 10 }}
-      />
+        <TextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          style={{ borderWidth: 1, marginBottom: 10, padding: 10 }}
+        />
 
-      <TextInput
-        placeholder="Senha"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={{ borderWidth: 1, marginBottom: 10, padding: 10 }}
-      />
+        <TextInput
+          placeholder="Senha"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          style={{ borderWidth: 1, marginBottom: 10, padding: 10 }}
+        />
 
-      <Button title="Entrar" onPress={handleLogin} />
+        <Button title="Entrar" onPress={handleLogin} />
 
-      <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
-        <Text style={{ marginTop: 10 }}>Criar conta?</Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
+          <Text style={{ marginTop: 10 }}>Criar conta?</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('EsqueciSenha')}>
-        <Text style={{ marginTop: 10 }}>Esqueci minha senha</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity onPress={() => navigation.navigate('EsqueciSenha')}>
+          <Text style={{ marginTop: 10 }}>Esqueci minha senha</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
